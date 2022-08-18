@@ -6,7 +6,7 @@
           class="img-fluid" alt="Login Image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form [formGroup]="form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <!-- Connect with google -->
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <p class="lead fw-normal mb-0 me-3">Sign in with</p>
@@ -31,15 +31,16 @@
               id="email"
               placeholder="Enter a valid email address"
               formControlName="email"
+              [errorStateMatcher]="matcher"
               name="email"
               required
               />
             <mat-error
-                *ngIf="email?.hasError('email') && !email?.hasError('required') && isSubmited">
+                *ngIf="email?.hasError('email') && !email?.hasError('required')">
                 Please enter a valid <strong>email</strong> address
             </mat-error>
             <mat-error
-                *ngIf="email?.hasError('required') && isSubmited">
+                *ngIf="email?.hasError('required')">
                 Email is <strong>required</strong>
             </mat-error>
           </mat-form-field>
@@ -57,16 +58,26 @@
               id="password"
               placeholder="Enter password"
               formControlName="password"
+              [errorStateMatcher]="matcher"
+              [type]="hide ? 'password' : 'text'"
               name="password"
               required
             />
+            <button
+              type="button"
+              mat-icon-button matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error
-            *ngIf="password?.hasError('minlength') && !password?.hasError('required') && isSubmited"
+            *ngIf="password?.hasError('minlength') && !password?.hasError('required')"
             >
               Password must have <strong>{{password?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{password?.errors?.['minlength'].actualLength}}</strong> Letters
             </mat-error>
             <mat-error
-              *ngIf=" password?.hasError('required') && isSubmited"
+              *ngIf=" password?.hasError('required')"
             >
               Password is <strong>required</strong>
             </mat-error>
@@ -76,11 +87,9 @@
           <div class="text-center mt-4 pt-2">
             <button
               mat-raised-button
-              type="button"
-              (click)="LoginButton()"
+              type="submit"
               color="primary"
               class="btn btn-primary btn-lg btn-block"
-
               >
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Login  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </button>

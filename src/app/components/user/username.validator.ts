@@ -14,24 +14,32 @@ export class Usernamevalidator{
   }
 
   //password check and confiramtion password
-  static mustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
+  static passwordMatch(password: string, confirmPassword: string) {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const passwordControl = formGroup.get(password);
+      const confirmPasswordControl = formGroup.get(confirmPassword);
 
-      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
-        return;
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
       }
 
-      // set error on matchingControl if validation fails
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true });
+      if (
+        confirmPasswordControl.errors &&
+        !confirmPasswordControl.errors["passwordMismatch"]
+      ) {
+        return null;
+      }
+
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordMismatch: true });
+        return { passwordMismatch: true };
       } else {
-        matchingControl.setErrors(null);
+        confirmPasswordControl.setErrors(null);
+        return null;
       }
-      return null;
     };
   }
+
 
 
 }

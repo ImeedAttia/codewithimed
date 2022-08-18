@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators } from '@angular/forms';
+import { ErrorsStateMatcher } from '../Error-state-matcher';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +19,8 @@ export class LoginComponent implements OnInit {
     LoginImgPath="../../../../assets/Login.svg";
     // check the form is submitted or not yet
     isSubmited:boolean=false;
-
-  //login fncts
-  LoginButton(){
-    this.isSubmited = true;
-    if(!this.form.invalid){
-      alert('stay')}
-  }
+    // hide attribute for the password input
+    hide:boolean = true;
 
   //form validators
     form : FormGroup = new FormGroup({
@@ -40,9 +36,14 @@ export class LoginComponent implements OnInit {
     return this.form.get("password")
   }
 
+  // match errors in the submition of form
+  matcher = new ErrorsStateMatcher();
 
-
-
+  // submit fntc
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.form.value);
+  }
 
 
 
