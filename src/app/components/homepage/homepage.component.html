@@ -1,9 +1,62 @@
-<p>homepage works!</p>
-<p>nav-bar works!</p>
-<mat-icon>account_circle</mat-icon>
-<mat-icon> local_phone</mat-icon>
-<mat-icon> place</mat-icon>
-<mat-icon>question_answer</mat-icon>
+<mat-form-field class="form-group mb-3" appearance="fill">
 
+  <mat-label
+    class="form-label"
+    for="password"
+  >
+  <i class="me-3"><mat-icon>lock</mat-icon></i> Password
+  </mat-label>
 
-<mat-icon>cancel</mat-icon>
+  <input
+    matInput
+    type="password"
+    id="password"
+    placeholder="Enter password"
+    formControlName="password"
+    name="password"
+    required
+  />
+  <mat-error
+  *ngIf="password?.hasError('minlength') && !password?.hasError('required') && isSubmited"
+  >
+    Password must have <strong>{{password?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{password?.errors?.['minlength'].actualLength}}</strong> Letters
+  </mat-error>
+
+  <mat-error
+    *ngIf=" password?.hasError('required') && isSubmited"
+  >
+    Password is <strong>required</strong>
+  </mat-error>
+
+</mat-form-field>
+<mat-form-field class="form-group mb-3" appearance="fill">
+
+  <mat-label
+    class="form-label"
+    for="password"
+  >
+  <i class="me-3"><mat-icon>lock</mat-icon></i> Password
+  </mat-label>
+
+  <input
+    matInput
+    type="password"
+    id="password"
+    placeholder="Enter password"
+    formControlName="password"
+    name="password"
+    required
+  />
+  <mat-error
+  *ngIf="password?.hasError('minlength') && !password?.hasError('required') && isSubmited"
+  >
+    Password must have <strong>{{password?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{password?.errors?.['minlength'].actualLength}}</strong> Letters
+  </mat-error>
+
+  <mat-error
+    *ngIf=" password?.hasError('required') && isSubmited"
+  >
+    Password is <strong>required</strong>
+  </mat-error>
+
+</mat-form-field>

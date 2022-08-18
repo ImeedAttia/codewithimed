@@ -3,24 +3,21 @@
       <div class="row justify-content-center">
         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
           <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-3">Sign up </p>
-         <form class="mx-1 mx-md-4">
-
-
-
-
+        <form  [formGroup]="form" class="mx-1 mx-md-4">
            <!-- First name input -->
            <div class="d-flex flex-row align-items-center mb-4">
             <i class="me-3">
-            <mat-icon>person</mat-icon></i>
+              <mat-icon>
+                person
+              </mat-icon>
+            </i>
             <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
               <mat-label
                 class="form-label"
                 for="firstName"
               >
                 First Name
               </mat-label>
-
               <input
                 matInput
                 type="text"
@@ -30,31 +27,35 @@
                 name="firstName"
                 required
                 />
-
-                <mat-error
-                  *ngIf="firstName?.hasError('email') && !firstName?.hasError('required')">
-                  Please enter a valid <strong>name</strong>
-                </mat-error>
-
-                <mat-error
-                  *ngIf="firstName?.hasError('required')">
-                  First name is <strong>required</strong>
-                </mat-error>
-
+              <mat-error
+                *ngIf="firstName?.hasError('minlength') && !firstName?.hasError('required') && isSubmited"
+                >
+                  First name must have <strong>{{firstName?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{firstName?.errors?.['minlength'].actualLength}}</strong> Letters
+              </mat-error>
+              <mat-error
+                *ngIf="firstName?.hasError('required') && isSubmited">
+                First name is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="firstName?.hasError('cannotContainSpace') && isSubmited">
+                First name does not support  <strong>Spaces</strong>
+              </mat-error>
             </mat-form-field>
           </div>
           <!-- Last name input -->
           <div class="d-flex flex-row align-items-center mb-3">
-            <i class="me-3"> <mat-icon> person</mat-icon></i>
+            <i class="me-3">
+              <mat-icon>
+                person
+              </mat-icon>
+            </i>
             <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
               <mat-label
                 class="form-label"
                 for="lastName"
               >
                 Last Name
               </mat-label>
-
               <input
                 matInput
                 type="text"
@@ -63,32 +64,38 @@
                 formControlName="lastName"
                 name="lastName"
                 required
-                />
-
-                <mat-error
-                  *ngIf="lastName?.hasError('email') && !lastName?.hasError('required')">
-                  Please enter a valid <strong>name</strong>
-                </mat-error>
-
-                <mat-error
-                  *ngIf="lastName?.hasError('required')">
-                  Last name is <strong>required</strong>
-                </mat-error>
-
+              />
+              <mat-error
+                *ngIf="lastName?.hasError('minlength') && !lastName?.hasError('required') && isSubmited"
+              >
+                  Last name must have <strong>{{lastName?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{lastName?.errors?.['minlength'].actualLength}}</strong> Letters
+              </mat-error>
+              <mat-error
+                *ngIf="lastName?.hasError('required') && isSubmited"
+              >
+                Last name is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="lastName?.hasError('cannotContainSpace') && isSubmited"
+              >
+                Last name does not support  <strong>Spaces</strong>
+              </mat-error>
             </mat-form-field>
           </div>
           <!-- Email name input -->
           <div class="d-flex flex-row align-items-center mb-3">
-            <i class="me-3"> <mat-icon> email</mat-icon></i>
+            <i class="me-3">
+              <mat-icon>
+                email
+              </mat-icon>
+            </i>
             <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
               <mat-label
                 class="form-label"
                 for="Email"
               >
-               Email address
+                Email address
               </mat-label>
-
               <input
                 matInput
                 type="email"
@@ -98,66 +105,63 @@
                 name="email"
                 required
                 />
-
-                <mat-error
-                  *ngIf="email?.hasError('email') && !email?.hasError('required')">
-                  Please enter a valid <strong>email</strong> address
-                </mat-error>
-
-                <mat-error
-                  *ngIf="email?.hasError('required')">
-                  Email is <strong>required</strong>
-                </mat-error>
-
+              <mat-error
+                *ngIf="email?.hasError('email') && !email?.hasError('required') && isSubmited">
+                Please enter a valid <strong>email</strong> address
+              </mat-error>
+              <mat-error
+                *ngIf="email?.hasError('required')  && isSubmited">
+                Email is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
           </div>
           <!-- Phone name input -->
           <div class="d-flex flex-row align-items-center mb-3">
-            <i class="me-3"> <mat-icon> phone</mat-icon></i>
+            <i class="me-3">
+              <mat-icon>
+                phone
+              </mat-icon>
+            </i>
             <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
               <mat-label
                 class="form-label"
                 for="phone"
               >
                 Phone Number
               </mat-label>
-
               <input
                 matInput
-                type="number"
+                type="tel"
                 id="phone"
                 placeholder="Enter a valid phone number"
                 formControlName="phone"
                 name="phone"
                 required
                 />
-
-                <mat-error
-                  *ngIf="phone?.hasError('email') && !phone?.hasError('required')">
-                  Please enter a valid <strong>phone</strong> number
-                </mat-error>
-
-                <mat-error
-                  *ngIf="phone?.hasError('required')">
-                  phone number is <strong>required</strong>
-                </mat-error>
-
+              <mat-error
+                *ngIf="phone?.hasError('pattern') && !phone?.hasError('required')  && isSubmited">
+                Please enter a valid <strong>phone</strong> number
+              </mat-error>
+              <mat-error
+                *ngIf="phone?.hasError('required')  && isSubmited">
+                phone number is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
           </div>
            <!-- Password input -->
-          <div class="from-group">
-            <i class="me-3"><mat-icon>lock</mat-icon></i>
-
+          <div class="d-flex flex-row align-items-center mb-3">
+            <i class="me-3">
+              <mat-icon>
+                lock
+              </mat-icon>
+            </i>
             <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
               <mat-label
                 class="form-label"
                 for="password"
               >
-              <i class="me-3"><mat-icon>lock</mat-icon></i> Password
+                Password
               </mat-label>
-
               <input
                 matInput
                 type="password"
@@ -168,82 +172,86 @@
                 required
               />
               <mat-error
-              *ngIf="password?.hasError('minlength') && !password?.hasError('required')"
+                *ngIf=" password?.hasError('pattern') && !password?.hasError('required')  && isSubmited"
+              >
+                Must contain at least <strong>one number</strong> and <strong>one uppercase</strong> and <strong>lowercase letters</strong> ,
+                and at <strong>least 8</strong> or more characters.
+              </mat-error>
+              <mat-error
+              *ngIf="password?.hasError('minlength') && !password?.hasError('required')  && isSubmited"
               >
                 Password must have <strong>{{password?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{password?.errors?.['minlength'].actualLength}}</strong> Letters
               </mat-error>
-
               <mat-error
-                *ngIf=" password?.hasError('required')"
+                *ngIf=" password?.hasError('required')  && isSubmited"
               >
                 Password is <strong>required</strong>
               </mat-error>
-
             </mat-form-field>
           </div>
           <!-- Confirmation Password input -->
           <div class="d-flex flex-row align-items-center mb-3">
-            <i class="me-3"><mat-icon> vpn_key</mat-icon></i>
-            <mat-form-field class="form-outline flex-fill mb-0" appearance="fill">
-
+            <i class="me-3">
+              <mat-icon>
+                vpn_key
+              </mat-icon>
+            </i>
+            <mat-form-field
+              class="form-outline flex-fill mb-0"
+              appearance="fill"
+            >
               <mat-label
                 class="form-label"
-                for="password"
+                for="cPassword"
               >
-              <i class="me-3"><mat-icon>lock</mat-icon></i> Password
+                Confirm Password
               </mat-label>
-
               <input
                 matInput
                 type="password"
-                id="password"
+                id="cPassword"
                 placeholder="Enter password"
-                formControlName="password"
-                name="password"
+                formControlName="cPassword"
+                name="cPassword"
                 required
               />
-              <mat-error
-              *ngIf="password?.hasError('minlength') && !password?.hasError('required')"
-              >
-                Password must have <strong>{{password?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{password?.errors?.['minlength'].actualLength}}</strong> Letters
+              <mat-error *ngIf="cPassword?.hasError('notSame')  && isSubmited">
+                Password does not match ////////////////////////////////////////
               </mat-error>
-
               <mat-error
-                *ngIf=" password?.hasError('required')"
+                *ngIf=" cPassword?.hasError('required')  && isSubmited"
               >
-                Password is <strong>required</strong>
+                Password confirmation is <strong>required</strong>
               </mat-error>
-
             </mat-form-field>
           </div>
-
-
-
-
-
-
-
           <!-- Connect with google -->
-           <div class="divider d-flex align-items-center my-4">
+          <div class="divider d-flex align-items-center my-4">
               <p class="text-center fw-bold mx-3 mb-0">Or use  </p>
-              <button mat-raised-button  class="btn btn-danger btn-lg btn-block">  <i class="fa fa-google-plus"></i>  Google+</button>
-            </div>
-
-
-            <div class="form-check d-flex justify-content-center mb-5">
+              <button mat-raised-button  class="btn btn-danger btn-lg btn-block">  <i class="fa fa-google-plus"></i>  Google</button>
+          </div>
+          <!--agree Terms of service-->
+          <div class="form-check d-flex justify-content-center mb-5">
               <mat-slide-toggle> I agree all statements in</mat-slide-toggle>
 
               <label class="form-check-label" for="form2Example3">
                <a href="#!" class="link-danger">Terms of service</a>
               </label>
-            </div>
-
-            <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-              <button mat-raised-button type="button" color="primary" class="btn btn-primary btn-lg btn-block">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Register  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-            </div>
-
-          </form>
+          </div>
+          <!--Register Button-->
+          <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+            <button
+              mat-raised-button
+              type="button"
+              color="primary"
+              (click)="RegisterButton()"
+              class="btn btn-primary btn-lg btn-block">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Register  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+          </div>
+        </form>
         </div>
+        <!--Image-->
         <div class="col-md-9 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
           <img [src]="RegisterImgPath"
             class="img-fluid" alt="Register Image">
