@@ -5,7 +5,7 @@
           <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-3">Sign up </p>
         <form  [formGroup]="form" class="mx-1 mx-md-4" (ngSubmit)="onSubmit()">
            <!-- First name input -->
-           <div class="d-flex flex-row align-items-center mb-4">
+           <div class="d-flex flex-row align-items-center mb-3">
             <i class="me-3">
               <mat-icon>
                 person
@@ -84,7 +84,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <!-- Email name input -->
+          <!-- Email input -->
           <div class="d-flex flex-row align-items-center mb-3">
             <i class="me-3">
               <mat-icon>
@@ -118,7 +118,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <!-- Phone name input -->
+          <!-- Phone input -->
           <div class="d-flex flex-row align-items-center mb-3">
             <i class="me-3">
               <mat-icon>
@@ -151,6 +151,117 @@
                 phone number is <strong>required</strong>
               </mat-error>
             </mat-form-field>
+          </div>
+          <!-- Address inputs -->
+          <div class="d-flex justify-content-center mx-4 mb-3">
+            <i class="me-3">
+              <mat-icon>
+                add_location
+              </mat-icon>
+            </i>
+            <!--stepper for address informations-->
+            <mat-stepper class="form-outline flex-fill mb-0">
+              <!--stepper for country informations-->
+              <mat-step>
+                <ng-template matStepLabel>Fill out your country</ng-template>
+                <mat-form-field appearance="fill">
+                  <mat-label>City</mat-label>
+                  <input
+                    matInput
+                    formControlName="country"
+                    placeholder="Country"
+                    required
+                    >
+                  <mat-error
+                    *ngIf="country?.hasError('minlength') && !country?.hasError('required')"
+                  >
+                    Country name must have <strong>{{country?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{country?.errors?.['minlength'].actualLength}}</strong> Letters
+                  </mat-error>
+                  <mat-error
+                    *ngIf="country?.hasError('required')"
+                  >
+                    Country name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <div>
+                  <button
+                    type="button"
+                    mat-button
+                    matStepperNext
+                    >
+                  Next
+                  </button>
+                </div>
+              </mat-step>
+              <!--stepper for city informations-->
+              <mat-step label="Fill out your city">
+                <mat-form-field appearance="fill">
+                  <mat-label>City</mat-label>
+                  <input
+                    matInput
+                    formControlName="city" placeholder="City"
+                    required
+                    >
+                  <mat-error
+                      *ngIf="city?.hasError('minlength') && !city?.hasError('required')"
+                    >
+                      city name must have <strong>{{city?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{city?.errors?.['minlength'].actualLength}}</strong> Letters
+                  </mat-error>
+                  <mat-error
+                      *ngIf="city?.hasError('required')"
+                    >
+                      city name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <div>
+                  <button
+                    type="button"
+                    mat-button
+                    matStepperPrevious
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    mat-button
+                    matStepperNext
+                  >
+                    Next
+                  </button>
+                </div>
+              </mat-step>
+            <!--stepper for postal informations-->
+            <mat-step label="Fill out your postal">
+              <mat-form-field appearance="fill">
+                <mat-label>Postal</mat-label>
+                <input
+                  matInput
+                  formControlName="postal"
+                  placeholder="Postal"
+                  required
+                  >
+                  <mat-error
+                    *ngIf="postal?.hasError('minlength') && !postal?.hasError('required')"
+                  >
+                    Postal name must have <strong>{{postal?.errors?.['minlength'].requiredLength}}</strong> Letters ,You have Submitted <strong>{{postal?.errors?.['minlength'].actualLength}}</strong> Letters
+                  </mat-error>
+                  <mat-error
+                    *ngIf="postal?.hasError('required')"
+                  >
+                    Postal name is <strong>required</strong>
+                  </mat-error>
+              </mat-form-field>
+              <div>
+                <button
+                  type="button"
+                  mat-button
+                  matStepperPrevious
+                >
+                  Back
+                </button>
+              </div>
+            </mat-step>
+            </mat-stepper>
           </div>
            <!-- Password input -->
           <div class="d-flex flex-row align-items-center mb-3">
@@ -252,14 +363,20 @@
             </mat-form-field>
           </div>
           <!-- Connect with google -->
-          <div class="divider d-flex align-items-center my-4">
+          <div class="divider d-flex align-items-center mb-4">
               <p class="text-center fw-bold mx-3 mb-0">Or use  </p>
               <button type="button" mat-raised-button  class="btn btn-danger btn-lg btn-block">  <i class="fa fa-google-plus"></i>  Google</button>
           </div>
-          <!--agree Terms of service-->
+          <!--agree Terms of service -->
+            <!-- [ngModelOptions]="{standalone: true}" : to make [(ngmodel)] works on its own -->
           <div class="form-check d-flex justify-content-center mb-5">
-              <mat-slide-toggle> I agree all statements in</mat-slide-toggle>
-
+              <mat-slide-toggle
+                color="primary"
+                [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="IsAccepted"
+              >
+                I agree all statements in
+              </mat-slide-toggle>
               <label class="form-check-label" for="form2Example3">
                <a href="#!" class="link-danger">Terms of service</a>
               </label>
@@ -270,18 +387,21 @@
               mat-raised-button
               type="submit"
               color="primary"
-              (click)="RegisterButton()"
               class="btn btn-primary btn-lg btn-block">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Register  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </button>
           </div>
+
         </form>
         </div>
         <!--Image-->
         <div class="col-md-9 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
           <img [src]="RegisterImgPath"
-            class="img-fluid" alt="Register Image">
+               class="img-fluid"
+               alt="Register Image"
+          >
         </div>
       </div>
     </div>
   </section>
+

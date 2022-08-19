@@ -58,10 +58,9 @@ export class LoginComponent implements OnInit {
           console.log(data)
           this.tokenStorage.saveToken(data.token as string);
           this.tokenStorage.saveUser(data.id);
-
           this.isLoginFailed = false;
-          this._snackBar.open("Login in succesfully", '✅');
-          this.router.navigate(['/home']);
+          window.location.reload();
+
         },
         error: (err : Error) => {
           this.errorMessage = err.message;

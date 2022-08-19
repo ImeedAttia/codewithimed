@@ -38,11 +38,13 @@ import { authInterceptorProviders } from './interceptors/auth-interceptor.interc
 
 
   ],
-  providers: [authInterceptorProviders,
+  providers: [
+              authInterceptorProviders,
               DataService,
               UserService,
               {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 3500}},
-              {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}],
+              {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

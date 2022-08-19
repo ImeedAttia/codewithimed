@@ -14,8 +14,9 @@ export class AuthGuardGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if(this.authService.getToken() === null) {
+      console.log("Access Denied !!!");
       this.router.navigate(['/login'])
-      
+
     }
     return true;
   }
