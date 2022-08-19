@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private entryService : EntryService, private tokenStorage: TokenStorageService,private _snackBar: MatSnackBar,private router : Router) {}
+  constructor(private entryService : EntryService, private tokenStorage: TokenStorageService,private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
 
@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
       this.entryService.login(LoginInfo)
       .subscribe({
         next: (data :any) =>{
-          console.log(data)
           this.tokenStorage.saveToken(data.token as string);
           this.tokenStorage.saveUser(data.id);
           this.isLoginFailed = false;
