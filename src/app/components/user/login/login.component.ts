@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorsStateMatcher } from '../Error-state-matcher';
+import { EntryService } from './../../../Services/entry.service';
+import { TokenStorageService } from 'src/app/Services/token-storage.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,25 +12,30 @@ import { ErrorsStateMatcher } from '../Error-state-matcher';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+
+  constructor(private entryService : EntryService, private tokenStorage: TokenStorageService,private _snackBar: MatSnackBar,private router : Router) {}
 
   ngOnInit(): void {
-  }
 
+  }
 
   //Declaration
     //Path of Login img
     LoginImgPath="../../../../assets/Login.svg";
-    // check the form is submitted or not yet
+    //Check the form is submitted or not yet
     isSubmited:boolean=false;
-    // hide attribute for the password input
+    //Hide attribute for the password input
     hide:boolean = true;
+    //Login is failed case
+    isLoginFailed = false;
+    //To display Login Error in case of failure
+    errorMessage = '';
 
   //form validators
-    form : FormGroup = new FormGroup({
-      email : new FormControl("",[Validators.required,Validators.email]),
-      password : new FormControl("",[Validators.required,Validators.minLength(8)])
-    })
+  form : FormGroup = new FormGroup({
+    email : new FormControl("",[Validators.required,Validators.email]),
+    password : new FormControl("",[Validators.required,Validators.minLength(8)])
+  });
 
   //get all Form Fields
   get email(){
@@ -41,8 +50,30 @@ export class LoginComponent implements OnInit {
 
   // submit fntc
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.form.value);
+    const LoginInfo = {'email' : this.email?.value,'password' : this.password?.value};
+    if(this.form.valid){
+      this.entryService.login(LoginInfo)
+      .subscribe({
+        next: (data :any) =>{
+          console.log(data)
+          this.tokenStorage.saveToken(data.token as string);
+          this.tokenStorage.saveUser(data.id);
+
+          this.isLoginFailed = false;
+          this._snackBar.open("Login in succesfully", '✅');
+          this.router.navigate(['/home']);
+        },
+        error: (err : Error) => {
+          this.errorMessage = err.message;
+          this.isLoginFailed = true;
+          this._snackBar.open("The user name or password are incorrect. This is easily corrected by typing the correct user name and password.", '❌');
+        }
+      });
+    }
+    else{
+      this._snackBar.open("Enter a valid informations !!!", '❌');
+
+    }
   }
 
 

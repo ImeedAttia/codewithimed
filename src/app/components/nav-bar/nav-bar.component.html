@@ -54,7 +54,21 @@
       <mat-chip
         routerLink="/login"
         routerLinkActive="selectedNav"
+        title="logout"
+        *ngIf="isLoggedIn"
+        (click)="logout()"
+        >
+          <span>
+            <mat-icon class="logout">
+              logout
+            </mat-icon>
+          </span> &nbsp; Logout
+      </mat-chip>
+      <mat-chip
+        routerLink="/login"
+        routerLinkActive="selectedNav"
         title="login"
+        *ngIf="!isLoggedIn"
         >
           <span>
             <mat-icon>
@@ -66,6 +80,7 @@
         routerLink="/register"
         routerLinkActive="selectedNav"
         title="register"
+        *ngIf="!isLoggedIn"
         >
           <span>
             <mat-icon>
