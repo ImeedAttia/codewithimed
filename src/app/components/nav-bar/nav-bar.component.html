@@ -41,7 +41,11 @@
             </mat-icon>
           </span> &nbsp; Home
       </mat-chip>
-      <mat-chip>
+      <mat-chip
+      routerLink="/profile"
+      routerLinkActive="selectedNav"
+      title="profile"
+      >
         <mat-icon>
           notifications
         </mat-icon>
@@ -89,13 +93,13 @@
           </span> &nbsp; Register
       </mat-chip>
       <mat-chip
-        routerLink="/home"
+        routerLink="/profile"
         routerLinkActive="selectedNav"
         title="profile"
         *ngIf="isLoggedIn"
         >
           <img
-            src="https://mdbootstrap.com/img/new/avatars/1.webp"
+            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
             class="rounded-circle"
             height="22"
             alt=""

@@ -17,6 +17,7 @@ import { UserService } from './Services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { authInterceptorProviders } from './interceptors/auth-interceptor.interceptor';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { authInterceptorProviders } from './interceptors/auth-interceptor.interc
     RegisterComponent,
     NavBarComponent,
     LoginComponent,
-    HomepageComponent
+    HomepageComponent,
+    ProfileComponent
   ],
   imports: [
   BrowserModule,

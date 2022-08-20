@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       this.entryService.login(LoginInfo)
       .subscribe({
         next: (data :any) =>{
-          this.tokenStorage.saveToken(data.token as string);
+          this.tokenStorage.saveToken(data.token);
           this.tokenStorage.saveUser(data.id);
           this.isLoginFailed = false;
           window.location.reload();
